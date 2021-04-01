@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>FlashCards</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+		<div id="card">
+			<div id="front"></div>
+			<div id="back"></div>
+		</div>
+		<div id="btn">NEXT</div>
+	<script>
+	(function(){
+	'use strict';
+
+	var words=[
+	{'en':'run', 'ja':'走る'},
+	{'en':'read', 'ja':'読む'},
+	{'en':'study', 'ja':'勉強する'},
+	{'en':'write', 'ja':'書く'},
+	{'en':'make', 'ja':'作る'}
+	];
+	var front=document.getElementById('front');
+	var back=document.getElementById('back');
+	var card=document.getElementById('card');
+	var btn=document.getElementById('btn');
+
+	btn.addEventListener('click', function(){
+		next();
+	});
+	card.addEventListener('click', function(){
+		flip();
+	});
+	function next(){
+		if(card.className==='open'){
+			card.addEventListener('transitionend', setCard);
+		flip();//ここでopenクラスを外す？
+		}else{
+			setCard();
+		}
+	}
+	function setCard(){
+		var num=Math.floor(Math.random() * words.length);
+		front.innerHTML=words[num]['en'];
+		back.innerHTML=words[num]['ja'];
+		card.removeEventListener('transitionend', setCard);
+	}
+	setCard();
+
+	function flip(){
+		card.className=card.className==='' ? 'open' : '';
+	}
+
+})();
+	</script>
+</body>
+</html>
